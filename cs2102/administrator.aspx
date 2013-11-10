@@ -45,9 +45,13 @@ VALUES(@booking_ID, @hotel_ID, @room, @c_passport, @start_date, @end_date)">
         </asp:SqlDataSource>
         <h2 class="auto-style1">Add New Booking</h2>
         <asp:Label ID="Label1" runat="server" Text="Booking ID"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="booking_IDinput" runat="server"></asp:TextBox><br />
+        <asp:TextBox ID="booking_IDinput" runat="server"></asp:TextBox>
+        <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
+        <br />
         <asp:Label ID="Label2" runat="server" Text="Hotel ID"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="hotel_IDinput" runat="server"></asp:TextBox><br />
+        <asp:TextBox ID="hotel_IDinput" runat="server" AutoPostBack="True"></asp:TextBox><br />
+        <asp:Label ID="Label5" runat="server" Text="Hotel Name"></asp:Label>&nbsp;&nbsp;
+        <asp:TextBox ID="hotel_name" runat="server" ReadOnly="True"></asp:TextBox><br />
         <asp:Label ID="Label3" runat="server" Text="Room Number"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="roominput" runat="server"></asp:TextBox><br />
         <asp:Label ID="Label4" runat="server" Text="Customer Passport"></asp:Label>&nbsp;&nbsp;
