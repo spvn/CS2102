@@ -69,7 +69,7 @@ Partial Class administrator
     End Sub
 
     Protected Sub roominput_TextChanged() Handles roominput.TextChanged
-        Dim found = False
+        Dim found As Boolean = False
 
         For Each drow As DataRow In roomTable.Rows
             If hotel_IDinput.Text = drow(0).ToString() And roominput.Text = drow(1) Then
@@ -115,7 +115,7 @@ Partial Class administrator
 
         checkDatesStr = "SELECT start_date, end_date FROM Booking WHERE hotel_ID = @hotel_ID and room = @room"
 
-        Dim checkDateCmd = New MySqlCommand(checkDatesStr, sqlconn)
+        Dim checkDateCmd As New MySqlCommand(checkDatesStr, sqlconn)
         sqlconn.Open()
 
         checkDateCmd.Parameters.AddWithValue("@hotel_ID", hotel_IDinput.Text)
@@ -143,7 +143,7 @@ Partial Class administrator
         Dim insertstr As String
         insertstr = "INSERT INTO Booking (hotel_ID, room, c_passport, start_date, end_date) VALUES (@hotel_ID, @room, @c_passport, @start_date, @end_date);"
 
-        Dim cmd = New MySqlCommand(insertstr, sqlconn)
+        Dim cmd As New MySqlCommand(insertstr, sqlconn)
 
 
         cmd.Parameters.AddWithValue("@hotel_ID", hotel_IDinput.Text)
