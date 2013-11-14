@@ -1,6 +1,13 @@
 ﻿<%@ Page Language="VB" %>
 
 <!DOCTYPE html>
+<script runat="server">
+
+    Protected Sub submitButton_Click(sender As Object, e As EventArgs)
+
+    End Sub
+</script>
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -15,14 +22,16 @@
     </div>
         <div style="text-align: center">
     
-            <p style="font-weight: 700; text-align: left;">Current Bookings&nbsp; </p>
+            <p style="font-weight: 700; text-align: center;">Passport number:&nbsp;
+                <asp:TextBox ID="passportInput" runat="server" Height="18px" style="margin-top: 5px"></asp:TextBox>
+                &nbsp;
+                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" />
+            </p>
     
         </div>
         <div style="text-align: center">
     
-            <p style="font-weight: 700; text-align: center;">Passport number:&nbsp;
-                <asp:TextBox ID="passportInput" runat="server" Height="22px"></asp:TextBox>
-            </p>
+            <p style="font-weight: 700; text-align: left;">Current Bookings</p>
     
         </div>
 
@@ -62,11 +71,11 @@
         <div style="text-align: center">
     
             <p style="text-align: left">Hotel name:
-                <asp:TextBox ID="hotelnametb" runat="server" style="text-align: left"></asp:TextBox>
+                <asp:TextBox ID="hotelnametb" runat="server" style="text-align: left" Width="106px"></asp:TextBox>
 &nbsp;&nbsp;&nbsp; Country:
-                <asp:TextBox ID="countrytb" runat="server"></asp:TextBox>
+                <asp:TextBox ID="countrytb" runat="server" Width="130px"></asp:TextBox>
 &nbsp;&nbsp;&nbsp; Stars:
-                <asp:TextBox ID="starstb" runat="server"></asp:TextBox>
+                <asp:TextBox ID="starstb" runat="server" Width="62px"></asp:TextBox>
                 <asp:Button ID="Search" runat="server" Text="Search"/>
             </p>
     
@@ -97,11 +106,11 @@
             <SortedDescendingHeaderStyle BackColor="#275353" />
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>" 
-            SelectCommand="SELECT * FROM [Hotel] WHERE (([h_name] LIKE '%' + @h_name + '%' ))">
+            SelectCommand="SELECT * FROM [Hotel] WHERE (([h_name] LIKE '%' + @h_name + '%' ) OR ([country] LIKE '%' + @country + '%') OR ([stars] = @stars))">
             <SelectParameters>
                 <asp:ControlParameter ControlID="hotelnametb" Name="h_name" PropertyName="Text" Type="String" DefaultValue ="%" />
                 <asp:ControlParameter ControlID="countrytb" Name="country" PropertyName="Text" Type="String" DefaultValue ="%"/>
-                <asp:ControlParameter ControlID="starstb" Name="stars" PropertyName="Text" Type="Decimal"/>
+                <asp:ControlParameter ControlID="starstb" Name="stars" PropertyName="Text" Type="Decimal" DefaultValue = '0'/>
             </SelectParameters>
         </asp:SqlDataSource>
     </form>
