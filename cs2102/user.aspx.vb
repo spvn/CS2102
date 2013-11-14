@@ -14,6 +14,7 @@ Partial Class user
         Dim sqlconn As New MySqlConnection(connStr)
         Dim copyHotelNames As String
 
+        errorLabel.Visible = False
         copyHotelNames = "Select hotel_ID, h_name, description, stars, country, address, postal_code FROM Hotel"
 
         tempAdapter.SelectCommand = New MySqlCommand(copyHotelNames, sqlconn)
@@ -27,6 +28,7 @@ Partial Class user
 
         Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
         Dim sqlconn As New MySqlConnection(connStr)
+        sqlconn.Open()
 
         If passportInput.Text = "null" Then
             errorLabel.Text = "Please enter valid passport number!"
@@ -35,7 +37,6 @@ Partial Class user
         End If
 
         errorLabel.Visible = False
-
         Dim selectstr As String
         selectstr = "SELECT * FROM Booking WHERE c_passport = @c_passport"
 
@@ -51,4 +52,24 @@ Partial Class user
 
     End Sub
 
+
+    Protected Sub Search_Click(sender As Object, e As EventArgs) Handles Search.Click
+        Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
+        Dim sqlconn As New MySqlConnection(connStr)
+        sqlconn.Open()
+        Dim selectstr As String
+        selectstr = "SELECT * FROM Hotel WHERE ((h_name LIKE '%' + @h_name + '%') AND (country LIKE '%' + @country + '%') AND (stars = @stars))"
+
+        Dim cmd As New MySqlCommand(selectstr, sqlconn)
+
+        cmd.Parameters.AddWithValue("@h_name", hotelnametb.Text)
+        cmd.Parameters.AddWithValue("@country", countrytb.Text)
+        cmd.Parameters.AddWithValue("@stars", starstb.Text)
+
+        cmd.ExecuteNonQuery()
+        sqlconn.Close()
+
+        searchResults.DataBind()
+
+    End Sub
 End Class

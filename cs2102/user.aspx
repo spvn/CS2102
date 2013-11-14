@@ -1,11 +1,9 @@
-﻿<%@ Page Language="VB" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="user.aspx.vb" Inherits="user" %>
 
 <!DOCTYPE html>
 <script runat="server">
+    
 
-    Protected Sub submitButton_Click(sender As Object, e As EventArgs)
-
-    End Sub
 </script>
 
 
@@ -25,7 +23,14 @@
             <p style="font-weight: 700; text-align: center;">Passport number:&nbsp;
                 <asp:TextBox ID="passportInput" runat="server" Height="18px" style="margin-top: 5px"></asp:TextBox>
                 &nbsp;
-                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" />
+                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" style="height: 26px" />
+            </p>
+    
+        </div>
+        <div style="text-align: center">
+    
+            <p style="font-weight: 700; text-align: center;">
+                <asp:Label ID="errorLabel" runat="server" Text="Label"></asp:Label>
             </p>
     
         </div>
@@ -106,12 +111,7 @@
             <SortedDescendingHeaderStyle BackColor="#275353" />
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>" 
-            SelectCommand="SELECT * FROM [Hotel] WHERE (([h_name] LIKE '%' + @h_name + '%' ) OR ([country] LIKE '%' + @country + '%') OR ([stars] = @stars))">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="hotelnametb" Name="h_name" PropertyName="Text" Type="String" DefaultValue ="%" />
-                <asp:ControlParameter ControlID="countrytb" Name="country" PropertyName="Text" Type="String" DefaultValue ="%"/>
-                <asp:ControlParameter ControlID="starstb" Name="stars" PropertyName="Text" Type="Decimal" DefaultValue = '0'/>
-            </SelectParameters>
+            SelectCommand= "SELECT * FROM [Hotel]">
         </asp:SqlDataSource>
     </form>
 </body>

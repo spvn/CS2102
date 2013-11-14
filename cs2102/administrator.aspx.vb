@@ -159,4 +159,7 @@ Partial Class administrator
 
     End Sub
 
+    Protected Sub submitButton_Click(sender As Object, e As EventArgs) Handles submitButton.Click
+
+    End Sub
 End Class
