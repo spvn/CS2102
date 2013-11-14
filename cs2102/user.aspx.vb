@@ -6,19 +6,18 @@ Partial Class user
     Inherits System.Web.UI.Page
 
     Dim tempAdapter As New MySqlDataAdapter()
-    Dim tempData As New DataTable()
+    Dim passportData As New DataTable()
     Dim roomTable As New DataTable()
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
         Dim sqlconn As New MySqlConnection(connStr)
-        Dim copyHotelNames As String
+        Dim copyPassports As String
 
-        errorLabel.Visible = False
-        copyHotelNames = "Select hotel_ID, h_name, description, stars, country, address, postal_code FROM Hotel"
+        copyPassports = "Select c_passport FROM Booking"
 
-        tempAdapter.SelectCommand = New MySqlCommand(copyHotelNames, sqlconn)
-        tempAdapter.Fill(tempData)
+        tempAdapter.SelectCommand = New MySqlCommand(copyPassports, sqlconn)
+        tempAdapter.Fill(passportData)
 
         sqlconn.Close()
 
@@ -30,13 +29,20 @@ Partial Class user
         Dim sqlconn As New MySqlConnection(connStr)
         sqlconn.Open()
 
-        If passportInput.Text = "null" Then
-            errorLabel.Text = "Please enter valid passport number!"
+        Dim found As Boolean = False
+        For Each drow As DataRow In passportData.Rows
+            If passportInput.Text = drow(0).ToString() Then
+                found = True
+                Exit For
+            End If
+        Next
+
+        If found = False Then
+            errorLabel.Text = "Please enter existing passport number!"
             errorLabel.Visible = True
             Return
         End If
 
-        errorLabel.Visible = False
         Dim selectstr As String
         selectstr = "SELECT * FROM Booking WHERE c_passport = @c_passport"
 
@@ -47,9 +53,9 @@ Partial Class user
 
         cmd.ExecuteNonQuery()
         sqlconn.Close()
-
         currBookings.DataBind()
 
+        errorLabel.Visible = False
     End Sub
 
 
@@ -58,7 +64,7 @@ Partial Class user
         Dim sqlconn As New MySqlConnection(connStr)
         sqlconn.Open()
         Dim selectstr As String
-        selectstr = "SELECT * FROM Hotel WHERE ((h_name LIKE '%' + @h_name + '%') AND (country LIKE '%' + @country + '%') AND (stars = @stars))"
+        selectstr = "SELECT * FROM Hotel WHERE ((h_name LIKE '%@h_name%') OR (country LIKE '%@country%') OR (stars = @stars))"
 
         Dim cmd As New MySqlCommand(selectstr, sqlconn)
 
