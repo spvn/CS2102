@@ -94,16 +94,15 @@
             <p style="text-align: left; font-weight: 700;">Search Results:</p>
     
     </div>
-        <asp:GridView ID="searchResults" runat="server" AutoGenerateColumns="False" DataKeyNames="hotel_ID" DataSourceID="SqlDataSource1" AllowPaging="True" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" CellPadding="4" GridLines="Horizontal">
+        <asp:GridView ID="searchResults" runat="server" AutoGenerateColumns="False" AllowPaging="True" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" CellPadding="4" GridLines="Horizontal" DataKeyNames="hotel_ID" DataSourceID="SqlDataSource1">
             <Columns>
-                <asp:BoundField DataField="hotel_ID" HeaderText="hotel_ID" SortExpression="hotel_ID" ReadOnly="True"></asp:BoundField>
-                <asp:BoundField DataField="h_name" HeaderText="h_name" SortExpression="h_name"></asp:BoundField>
-                <asp:BoundField DataField="description" HeaderText="description" SortExpression="description"></asp:BoundField>
-                <asp:BoundField DataField="stars" HeaderText="stars" SortExpression="stars"></asp:BoundField>
-                <asp:BoundField DataField="country" HeaderText="country" SortExpression="country"></asp:BoundField>
-                <asp:BoundField DataField="address" HeaderText="address" SortExpression="address"></asp:BoundField>
+                <asp:BoundField DataField="hotel_ID" HeaderText="hotel_ID" ReadOnly="True" SortExpression="hotel_ID" />
+                <asp:BoundField DataField="h_name" HeaderText="h_name" SortExpression="h_name" />
+                <asp:BoundField DataField="description" HeaderText="description" SortExpression="description" />
+                <asp:BoundField DataField="stars" HeaderText="stars" SortExpression="stars" />
+                <asp:BoundField DataField="country" HeaderText="country" SortExpression="country" />
+                <asp:BoundField DataField="address" HeaderText="address" SortExpression="address" />
                 <asp:BoundField DataField="postal_code" HeaderText="postal_code" SortExpression="postal_code" />
-                <asp:CommandField ShowSelectButton="True" HeaderText ="Book"/>
             </Columns>
             <FooterStyle BackColor="White" ForeColor="#333333" />
             <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
