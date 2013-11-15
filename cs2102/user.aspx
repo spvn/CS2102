@@ -1,11 +1,9 @@
-﻿<%@ Page Language="VB" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="user.aspx.vb" Inherits="user" %>
 
 <!DOCTYPE html>
 <script runat="server">
+    
 
-    Protected Sub submitButton_Click(sender As Object, e As EventArgs)
-
-    End Sub
 </script>
 
 
@@ -25,7 +23,14 @@
             <p style="font-weight: 700; text-align: center;">Passport number:&nbsp;
                 <asp:TextBox ID="passportInput" runat="server" Height="18px" style="margin-top: 5px"></asp:TextBox>
                 &nbsp;
-                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" />
+                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" style="height: 26px" />
+            </p>
+    
+        </div>
+        <div style="text-align: center">
+    
+            <p style="font-weight: 700; text-align: center;">
+                <asp:Label ID="errorLabel" runat="server" Text="Label" Visible="False"></asp:Label>
             </p>
     
         </div>
@@ -44,6 +49,8 @@
                 <asp:BoundField DataField="start_date" HeaderText="start_date" SortExpression="start_date" />
                 <asp:BoundField DataField="end_date" HeaderText="end_date" SortExpression="end_date" />
 
+                <asp:CommandField ButtonType="Button" ShowDeleteButton="True" />
+
             </Columns>
             <FooterStyle BackColor="White" ForeColor="#333333" />
             <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
@@ -57,7 +64,9 @@
         </asp:GridView>
 
          <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>" 
-            SelectCommand="SELECT * FROM [Booking] WHERE ([c_passport] = ?)" >
+            SelectCommand="SELECT * FROM [Booking] WHERE ([c_passport] = ?)" 
+            DeleteCommand="DELETE FROM Booking WHERE booking_ID=@booking_ID"
+             UpdateCommand="UPDATE Booking SET hotel_ID=@hotel_ID, room=@room, c_passport=@c_passport, start_date=str_to_date(@start_date,'%Y/%m/%d'), end_date=str_to_date(@end_date,'%Y/%m/%d') WHERE booking_ID=@booking_ID">
              <SelectParameters>
                  <asp:ControlParameter ControlID="passportInput" Name="c_passport" PropertyName="Text" Type="String" />
              </SelectParameters>
@@ -94,6 +103,7 @@
                 <asp:BoundField DataField="country" HeaderText="country" SortExpression="country"></asp:BoundField>
                 <asp:BoundField DataField="address" HeaderText="address" SortExpression="address"></asp:BoundField>
                 <asp:BoundField DataField="postal_code" HeaderText="postal_code" SortExpression="postal_code" />
+                <asp:CommandField ButtonType="Button" ShowSelectButton="True" HeaderText ="Book"/>
             </Columns>
             <FooterStyle BackColor="White" ForeColor="#333333" />
             <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
@@ -106,12 +116,7 @@
             <SortedDescendingHeaderStyle BackColor="#275353" />
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>" 
-            SelectCommand="SELECT * FROM [Hotel] WHERE (([h_name] LIKE '%' + @h_name + '%' ) OR ([country] LIKE '%' + @country + '%') OR ([stars] = @stars))">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="hotelnametb" Name="h_name" PropertyName="Text" Type="String" DefaultValue ="%" />
-                <asp:ControlParameter ControlID="countrytb" Name="country" PropertyName="Text" Type="String" DefaultValue ="%"/>
-                <asp:ControlParameter ControlID="starstb" Name="stars" PropertyName="Text" Type="Decimal" DefaultValue = '0'/>
-            </SelectParameters>
+            SelectCommand= "SELECT * FROM [Hotel]">
         </asp:SqlDataSource>
     </form>
 </body>
