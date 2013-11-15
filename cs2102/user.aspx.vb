@@ -64,7 +64,7 @@ Partial Class user
         Dim sqlconn As New MySqlConnection(connStr)
         sqlconn.Open()
         Dim selectstr As String
-        selectstr = "SELECT * FROM Hotel WHERE ((h_name LIKE '%@h_name%') OR (country LIKE '%@country%') OR (stars = @stars))"
+        selectstr = "SELECT * FROM Hotel WHERE (h_name LIKE '$@h_name')"
 
         Dim cmd As New MySqlCommand(selectstr, sqlconn)
 
@@ -72,10 +72,10 @@ Partial Class user
         cmd.Parameters.AddWithValue("@country", countrytb.Text)
         cmd.Parameters.AddWithValue("@stars", starstb.Text)
 
+        searchResults.DataBind()
+
         cmd.ExecuteNonQuery()
         sqlconn.Close()
-
-        searchResults.DataBind()
 
     End Sub
 End Class

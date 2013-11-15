@@ -103,7 +103,7 @@
                 <asp:BoundField DataField="country" HeaderText="country" SortExpression="country"></asp:BoundField>
                 <asp:BoundField DataField="address" HeaderText="address" SortExpression="address"></asp:BoundField>
                 <asp:BoundField DataField="postal_code" HeaderText="postal_code" SortExpression="postal_code" />
-                <asp:CommandField ButtonType="Button" ShowSelectButton="True" HeaderText ="Book"/>
+                <asp:CommandField ShowSelectButton="True" HeaderText ="Book"/>
             </Columns>
             <FooterStyle BackColor="White" ForeColor="#333333" />
             <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
@@ -115,8 +115,8 @@
             <SortedDescendingCellStyle BackColor="#E5E5E5" />
             <SortedDescendingHeaderStyle BackColor="#275353" />
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>" 
-            SelectCommand= "SELECT * FROM [Hotel]">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>"
+            SelectCommand= "SELECT * FROM Hotel">
         </asp:SqlDataSource>
     </form>
 </body>

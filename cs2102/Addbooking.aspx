@@ -7,23 +7,44 @@
     <title></title>
 </head>
 <body>
+    <form id="form1" runat="server">
 
             <div id ="newBooking">
             <h2 class="auto-style1">Add New Booking</h2>
   
             <asp:Label ID="Label2" runat="server" Text="Hotel ID"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="hotel_IDinput" runat="server" AutoPostBack="True"></asp:TextBox><br />
+        <asp:TextBox ID="hotel_IDinput" runat="server" AutoPostBack="True"></asp:TextBox>&nbsp;
             <asp:Label ID="Label5" runat="server" Text="Hotel Name"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="hotel_nameinput" runat="server" ReadOnly="True" Enabled="False"></asp:TextBox><br />
             <asp:Label ID="Label3" runat="server" Text="Room Number"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="roominput" runat="server" AutoPostBack="True"></asp:TextBox>&nbsp;&nbsp;
             <asp:Label ID="roomCheck" runat="server" Text="Room number invalid!" Visible="False"></asp:Label>
+                <br />
+                <br />
+                <asp:Label ID="Label14" runat="server" Text="Customer Information"></asp:Label>
+                <br />
             <br />
-            <asp:Label ID="Label4" runat="server" Text="Customer Passport"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="c_passportinput" runat="server" AutoPostBack="True"></asp:TextBox><br />
-            <asp:Label ID="Label6" runat="server" Text="Customer Name"></asp:Label>&nbsp;&nbsp;
+            <asp:Label ID="Label4" runat="server" Text="Passport ID"></asp:Label>&nbsp;&nbsp;
+        <asp:TextBox ID="c_passportinput" runat="server" AutoPostBack="True"></asp:TextBox>&nbsp;
+            <asp:Label ID="Label6" runat="server" Text="Name"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="c_nameinput" runat="server" Enabled="False" ReadOnly="True"></asp:TextBox>
-            <br />
+                &nbsp;
+                <asp:Label ID="Label10" runat="server" Text="Country"></asp:Label>
+            &nbsp;
+                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                <br />
+                <asp:Label ID="Label11" runat="server" Text="Credit card Number"></asp:Label>
+                &nbsp;
+                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                &nbsp;
+                <asp:Label ID="Label13" runat="server" Text="Email"></asp:Label>
+            &nbsp;
+                <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+            &nbsp;
+                <asp:Label ID="Label12" runat="server" Text="Mobile number"></asp:Label>
+            &nbsp;
+                <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                <br />
             <br />
             <div id="startdate">
             <asp:Label ID="Label8" runat="server" Text="Start Date"></asp:Label>
@@ -57,5 +78,6 @@
 
             <br />
         </div>
+    </form>
 </body>
 </html>
