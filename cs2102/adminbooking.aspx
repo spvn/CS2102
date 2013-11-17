@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="userbooking.aspx.vb" Inherits="userbooking" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="adminbooking.aspx.vb" Inherits="adminbooking" %>
 
 <!DOCTYPE html>
 
@@ -10,32 +10,21 @@
     <form id="form1" runat="server">
 
             <div id ="newBooking">
-            <h2 class="auto-style1">Book a Room</h2>
-  
-            &nbsp;&nbsp;
+            <h2 class="auto-style1">Add a Booking</h2>
   
             <asp:Label ID="Label2" runat="server" Text="Hotel ID"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="hotel_IDinput" runat="server" Enabled="False" Width="56px"></asp:TextBox>&nbsp;
+        <asp:TextBox ID="hotel_IDinput" runat="server" Width="56px" AutoPostBack="True"></asp:TextBox>&nbsp;
             <asp:Label ID="Label5" runat="server" Text="Hotel Name"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="hotel_nameinput" runat="server" ReadOnly="True" Enabled="False" Width="290px"></asp:TextBox>
-                <br />
-                <br />
-&nbsp;
-                Description<br />
-                <br />
-&nbsp;
-                <asp:TextBox ID="descriptioninput" runat="server" Height="100px" Width="450px" BorderStyle="None" Font-Names="Times New Roman" Font-Size="12pt" TextMode="MultiLine"></asp:TextBox>
                 <br />
                 <br />
                 Choose the type of room:&nbsp;
                 <asp:DropDownList ID="categorylist" runat="server" AutoPostBack="True">
                 </asp:DropDownList>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Room number:&nbsp;
-                <asp:DropDownList ID="roomlist" runat="server" AutoPostBack="True">
+                <asp:DropDownList ID="roomlist" runat="server">
                 </asp:DropDownList>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Label ID="pricelabel" runat="server" Text="Label"></asp:Label>
-                <br />
+                &nbsp;<br />
                 <br />
                 <asp:Label ID="Label14" runat="server" Text="Customer Information" Font-Bold="True"></asp:Label>
                 <br />

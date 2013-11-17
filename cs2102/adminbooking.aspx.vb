@@ -2,70 +2,10 @@
 Imports System.Data
 
 
-Partial Class userbooking
+Partial Class adminbooking
     Inherits System.Web.UI.Page
 
     Dim tempAdapter As New MySqlDataAdapter()
-
-
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        If Page.IsPostBack = False Then
-            Dim roomData As New DataTable()
-            Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
-            Dim sqlconn As New MySqlConnection(connStr)
-            Dim selectedID = Request.QueryString("id")
-            hotel_IDinput.Text = selectedID
-            Dim selectedName = Request.QueryString("name")
-            hotel_nameinput.Text = selectedName
-
-            Dim query As String
-            query = "Select room_number, category, price FROM Rooms WHERE hotel_ID =@hotel_ID"
-
-            Dim cmd = New MySqlCommand(query, sqlconn)
-
-            cmd.Parameters.AddWithValue("@hotel_ID", selectedID)
-
-            tempAdapter.SelectCommand = cmd
-
-            tempAdapter.Fill(roomData)
-
-            Dim distinct = (From row In roomData.AsEnumerable()
-            Select row.Field(Of String)("category")).Distinct().ToList()
-
-            categorylist.DataSource = distinct
-            categorylist.DataBind()
-
-            Dim selectedCat = categorylist.SelectedValue
-
-            Dim roomnumbers = roomData.Select("category = '" + selectedCat + "'").CopyToDataTable()
-
-            roomlist.DataSource = roomnumbers
-            roomlist.DataTextField = "room_number"
-            roomlist.DataBind()
-
-            ViewState("roomData") = roomData
-
-            Dim price = roomData.Select("room_number= '" + roomlist.SelectedValue + "'")(0).Item(2).ToString()
-
-            pricelabel.Text = "Cost per night: $" & price
-
-            query = "SELECT description from Hotel WHERE hotel_ID = @hotel_ID"
-            sqlconn.Open()
-            cmd = New MySqlCommand(query, sqlconn)
-            cmd.Parameters.AddWithValue("@hotel_ID", selectedID)
-            Dim reader As MySqlDataReader
-            reader = cmd.ExecuteReader()
-            While reader.Read()
-                descriptioninput.Text = reader.GetString(0)
-            End While
-
-
-            sqlconn.Close()
-        End If
-
-
-    End Sub
 
 
     Protected Sub c_passportinput_TextChanged() Handles c_passportinput.TextChanged
@@ -74,7 +14,7 @@ Partial Class userbooking
             Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
             Dim sqlconn As New MySqlConnection(connStr)
             Dim custTable As New DataTable
-            Dim foundCustomer As Boolean
+            Dim foundCustomer As Boolean = False
             Dim customerQuery As String = "SELECT c_name, c_country, c_creditcard, c_email, c_phone FROM Customer WHERE c_passport = " & c_passportinput.Text
 
             tempAdapter.SelectCommand = New MySqlCommand(customerQuery, sqlconn)
@@ -88,7 +28,6 @@ Partial Class userbooking
                 c_phoneinput.Text = custTable.Rows(0)(4)
                 foundCustomer = True
             Else
-                foundCustomer = False
                 foundCustomer = False
                 c_nameinput.Text = ""
                 c_countryinput.Text = ""
@@ -108,6 +47,11 @@ Partial Class userbooking
         Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
         Dim sqlconn As New MySqlConnection(connStr)
 
+        If hotel_nameinput.Text = "Please enter valid Hotel ID" Then
+            errorLabel.Text = "ERROR: Please enter valid Hotel ID"
+            errorLabel.Visible = True
+            Return
+        End If
         If c_passportinput.Text = "" Then
             errorLabel.Text = "ERROR: Please enter a passport number!"
             errorLabel.Visible = True
@@ -206,16 +150,65 @@ Partial Class userbooking
         roomlist.DataTextField = "room_number"
         roomlist.DataBind()
 
-        Dim price = roomData.Select("room_number= '" + roomlist.SelectedValue + "'")(0).Item(2).ToString()
-
-        pricelabel.Text = "Cost per night: $" & price
     End Sub
 
-    Protected Sub roomlist_SelectedIndexChanged(sender As Object, e As EventArgs) Handles roomlist.SelectedIndexChanged
-        Dim roomData As DataTable = ViewState("roomData")
+    Protected Sub hotel_IDinput_TextChanged(sender As Object, e As EventArgs) Handles hotel_IDinput.TextChanged
+        Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
+        Dim sqlconn As New MySqlConnection(connStr)
+        Dim query As String = "SELECT h_name from Hotel WHERE hotel_ID=@hotel_ID"
+        Dim cmd = New MySqlCommand(query, sqlconn)
 
-        Dim price = roomData.Select("room_number= '" + roomlist.SelectedValue + "'")(0).Item(2).ToString()
+        cmd.Parameters.AddWithValue("@hotel_ID", hotel_IDinput.Text)
+        Dim reader As MySqlDataReader
+        sqlconn.Open()
+        reader = cmd.ExecuteReader()
+        Dim found As Boolean = False
+        While reader.Read()
+            hotel_nameinput.Text = reader.GetString(0)
+            found = True
+        End While
 
-        pricelabel.Text = "Cost per night: $" & price
+        If found = False Then
+            hotel_nameinput.Text = "Please enter valid Hotel ID"
+            categorylist.Items.Clear()
+            roomlist.Items.Clear()
+            Return
+        End If
+
+        reader.Close()
+
+        Dim roomData As New DataTable()
+
+        query = "Select room_number, category, price FROM Rooms WHERE hotel_ID =@hotel_ID"
+
+        cmd = New MySqlCommand(query, sqlconn)
+
+        cmd.Parameters.AddWithValue("@hotel_ID", hotel_IDinput.Text)
+
+        tempAdapter.SelectCommand = cmd
+
+        tempAdapter.Fill(roomData)
+
+        Dim distinct = (From row In roomData.AsEnumerable()
+        Select row.Field(Of String)("category")).Distinct().ToList()
+
+        categorylist.DataSource = distinct
+        categorylist.DataBind()
+
+        Dim selectedCat = categorylist.SelectedValue
+
+        Dim roomnumbers = roomData.Select("category = '" + selectedCat + "'").CopyToDataTable()
+
+        roomlist.DataSource = roomnumbers
+        roomlist.DataTextField = "room_number"
+        roomlist.DataBind()
+
+        ViewState("roomData") = roomData
+
+
+        sqlconn.Close()
+
+
+
     End Sub
 End Class

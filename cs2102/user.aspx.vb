@@ -116,29 +116,19 @@ Partial Class user
 
 
     Protected Sub Search_Click(sender As Object, e As EventArgs) Handles Search.Click
-        'Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
-        'Dim sqlconn As New MySqlConnection(connStr)
-        'sqlconn.Open()
-        'Dim selectstr As String
-        'selectstr = "SELECT * FROM Hotel WHERE (h_name LIKE '%" & hotelnametb.Text & "%') AND (country LIKE '%" & countrytb.Text & "%') AND (stars LIKE '%" & starstb.Text & "%')"
 
-        'Dim cmd As New MySqlCommand(selectstr, sqlconn)
 
-        'cmd.Parameters.AddWithValue("@h_name", hotelnametb.Text)
-        'cmd.Parameters.AddWithValue("@country", countrytb.Text)
-        'cmd.Parameters.AddWithValue("@stars", starstb.Text)
 
-        'Dim searchAdapter As New MySqlDataAdapter()
-        'searchAdapter.SelectCommand = cmd
+        Dim selectQuery As String = "SELECT Hotel.hotel_ID, Hotel.h_name, Hotel.stars, Features.wifi, Features.gym, Features.swimming_pool, Features.shuttle_bus, " &
+                                    "Features.spa, Hotel.country, Hotel.address, Hotel.postal_code FROM Hotel INNER JOIN Features ON Hotel.hotel_ID = Features.hotel_ID " &
+                                    "WHERE (h_name LIKE '%" & hotelnametb.Text & "%') AND (country LIKE '%" & countrytb.Text & "%') AND (stars LIKE '%" & starstb.Text & "%')"
 
-        ' searchTable As New DataTable()
-        'searchAdapter.Fill(searchTable)
+        For Each item As ListItem In CheckBoxList1.Items
+            If item.Selected Then
+                selectQuery &= " AND (" & item.Value & " = 'Yes')"
+            End If
+        Next
 
-        'searchResults.Sort("", SortDirection.Ascending)
-        'searchResults.DataSourceID = ""
-        'searchResults.DataSource = searchTable
-
-        Dim selectQuery As String = "SELECT * FROM Hotel WHERE (h_name LIKE '%" & hotelnametb.Text & "%') AND (country LIKE '%" & countrytb.Text & "%') AND (stars LIKE '%" & starstb.Text & "%')"
         SqlDataSource1.SelectCommand = selectQuery
         searchResults.DataBind()
 
@@ -156,6 +146,5 @@ Partial Class user
         Response.Redirect("userbooking.aspx?id=" + selectedID + "&name=" + selectedName)
 
     End Sub
-
 
 End Class
