@@ -9,6 +9,28 @@ Partial Class Addbooking
     Dim tempData As New DataTable()
     Dim roomTable As New DataTable()
 
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
+        Dim sqlconn As New MySqlConnection(connStr)
+        Dim copyHotelNames As String
+        copyHotelNames = "Select hotel_ID, h_name, c_passport, c_name FROM Hotel, Customer"
+
+        tempAdapter.SelectCommand = New MySqlCommand(copyHotelNames, sqlconn)
+
+        tempAdapter.Fill(tempData)
+
+        Dim copyRooms As String
+        copyRooms = "Select hotel_ID, room_number FROM Rooms"
+
+        tempAdapter.SelectCommand = New MySqlCommand(copyRooms, sqlconn)
+        tempAdapter.Fill(roomTable)
+
+
+        sqlconn.Close()
+
+    End Sub
+
     Protected Sub hotel_IDinput_TextChanged() Handles hotel_IDinput.TextChanged
 
         Dim found As Boolean = False
@@ -28,19 +50,36 @@ Partial Class Addbooking
     End Sub
 
     Protected Sub c_passportinput_TextChanged() Handles c_passportinput.TextChanged
-        Dim found As Boolean = False
 
-        For Each drow As DataRow In tempData.Rows
-            If c_passportinput.Text = drow(2).ToString() Then
-                c_nameinput.Text = drow(3)
-                found = True
-                Exit For
-            End If
-        Next
+        Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
+        Dim sqlconn As New MySqlConnection(connStr)
+        Dim custTable As New DataTable
+        Dim customerQuery As String = "SELECT c_name, c_country, c_creditcard, c_email, c_phone FROM Customer WHERE c_passport = " & c_passportinput.Text
 
-        If found = False Then
-            c_nameinput.Text = "null"
+        tempAdapter.SelectCommand = New MySqlCommand(customerQuery, sqlconn)
+        tempAdapter.Fill(custTable)
+
+        If custTable.Rows.Count > 0 Then
+            c_nameinput.Text = custTable.Rows(0)(0)
+            c_countryinput.Text = custTable.Rows(0)(1)
+            c_creditcardinput.Text = custTable.Rows(0)(2)
+            c_emailinput.Text = custTable.Rows(0)(3)
+            c_phoneinput.Text = custTable.Rows(0)(4)
         End If
+        '       Dim found As Boolean = False
+
+        '      For Each drow As DataRow In tempData.Rows
+        'If c_passportinput.Text = drow(2).ToString() Then
+        'c_nameinput.Text = drow(3)
+        'found = True
+        'Exit For
+        'End If
+        'Next
+
+        'If found = False Then
+        'c_nameinput.Text = "null"
+        'End If
+        sqlconn.Close()
     End Sub
 
     Protected Sub roominput_TextChanged() Handles roominput.TextChanged

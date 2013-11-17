@@ -7,6 +7,10 @@
     Protected Sub Button1_Click(sender As Object, e As EventArgs)
         Response.Redirect("administrator.aspx")
     End Sub
+    
+    Protected Sub Button2_Click() Handles Button2.Click
+        Response.Redirect("user.aspx")
+    End Sub
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

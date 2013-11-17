@@ -7,31 +7,35 @@ Partial Class administrator
     Inherits System.Web.UI.Page
 
     Dim tempAdapter As New MySqlDataAdapter()
-    Dim tempData As New DataTable()
-    Dim roomTable As New DataTable()
+    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
-        Dim sqlconn As New MySqlConnection(connStr)
-        Dim copyHotelNames As String
-        copyHotelNames = "Select hotel_ID, h_name, c_passport, c_name FROM Hotel, Customer"
-
-
-        tempAdapter.SelectCommand = New MySqlCommand(copyHotelNames, sqlconn)
-
+        If Page.IsPostBack = False Then
+            Dim tempData As New DataTable()
+            Dim roomTable As New DataTable()
+            Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
+            Dim sqlconn As New MySqlConnection(connStr)
+            Dim copyHotelNames As String
+            copyHotelNames = "Select hotel_ID, h_name, c_passport, c_name FROM Hotel, Customer"
 
 
-        tempAdapter.Fill(tempData)
-
-        Dim copyRooms As String
-        copyRooms = "Select hotel_ID, room_number FROM Rooms"
-
-        tempAdapter.SelectCommand = New MySqlCommand(copyRooms, sqlconn)
-        tempAdapter.Fill(roomTable)
+            tempAdapter.SelectCommand = New MySqlCommand(copyHotelNames, sqlconn)
 
 
-        sqlconn.Close()
+
+            tempAdapter.Fill(tempData)
+            ViewState("tempData") = tempData
+
+            Dim copyRooms As String
+            copyRooms = "Select hotel_ID, room_number FROM Rooms"
+
+            tempAdapter.SelectCommand = New MySqlCommand(copyRooms, sqlconn)
+            tempAdapter.Fill(roomTable)
+            ViewState("roomTable") = roomTable
+
+
+            sqlconn.Close()
+        End If
 
     End Sub
 
@@ -41,17 +45,19 @@ Partial Class administrator
         Dim endDate = (CType((row.Cells(8).Controls(0)), TextBox)).Text
         Dim hotel = (CType((row.Cells(2).Controls(0)), TextBox)).Text
         Dim room = (CType((row.Cells(4).Controls(0)), TextBox)).Text
+        Dim bookingid As String = row.Cells(1).Text
 
         Dim connStr As String = "Database=akaspvnc_cs2102;Data Source=sql.byethost22.org;User Id=akaspvnc_cs2102;Password=oohjingrocks;"
         Dim sqlconn As New MySqlConnection(connStr)
 
-        Dim checkDatesStr = "SELECT start_date, end_date FROM Booking WHERE hotel_ID = @hotel_ID and room = @room"
+        Dim checkDatesStr = "SELECT start_date, end_date FROM Booking WHERE hotel_ID = @hotel_ID and room = @room and booking_id <> @booking_id"
 
         Dim checkDateCmd As New MySqlCommand(checkDatesStr, sqlconn)
         sqlconn.Open()
 
         checkDateCmd.Parameters.AddWithValue("@hotel_ID", hotel)
         checkDateCmd.Parameters.AddWithValue("@room", room)
+        checkDateCmd.Parameters.AddWithValue("@booking_id", bookingid)
 
         Dim dateCheckAdapter As New MySqlDataAdapter()
         dateCheckAdapter.SelectCommand = checkDateCmd
@@ -78,6 +84,7 @@ Partial Class administrator
     Protected Sub hotel_IDinput_TextChanged() Handles hotel_IDinput.TextChanged
 
         Dim found As Boolean = False
+        Dim tempdata As DataTable = ViewState("tempData")
 
         For Each drow As DataRow In tempData.Rows
             If hotel_IDinput.Text = drow(0).ToString() Then
@@ -95,6 +102,7 @@ Partial Class administrator
 
     Protected Sub c_passportinput_TextChanged() Handles c_passportinput.TextChanged
         Dim found As Boolean = False
+        Dim tempData As DataTable = ViewState("tempData")
 
         For Each drow As DataRow In tempData.Rows
             If c_passportinput.Text = drow(2).ToString() Then
@@ -111,6 +119,7 @@ Partial Class administrator
 
     Protected Sub roominput_TextChanged() Handles roominput.TextChanged
         Dim found As Boolean = False
+        Dim roomTable As DataTable = ViewState("roomTable")
 
         For Each drow As DataRow In roomTable.Rows
             If hotel_IDinput.Text = drow(0).ToString() And roominput.Text = drow(1) Then
@@ -133,28 +142,31 @@ Partial Class administrator
         Dim sqlconn As New MySqlConnection(connStr)
 
         If hotel_nameinput.Text = "null" Then
-            errorLabel.Text = "Please enter valid Hotel ID!"
+            errorLabel.Text = "ERROR: Please enter valid Hotel ID!"
             errorLabel.Visible = True
             Return
         End If
 
         If c_nameinput.Text = "null" Then
-            errorLabel.Text = "Please enter valid customer passport number!"
+            errorLabel.Text = "ERROR: Please enter valid customer passport number!"
             errorLabel.Visible = True
             Return
         End If
 
         If roomCheck.Visible = True Then
-            errorLabel.Text = "Please enter valid room number!"
+            errorLabel.Text = "ERROR: Please enter valid room number!"
             errorLabel.Visible = True
             Return
         End If
 
-        Dim checkDatesStr As String
         Dim startDate As String = start_dateinput.SelectedDate
         Dim endDate As String = end_dateinput.SelectedDate
-
-        checkDatesStr = "SELECT start_date, end_date FROM Booking WHERE hotel_ID = @hotel_ID and room = @room"
+        If startDate > endDate Then
+            errorLabel.Text = "ERROR: Start date is before end date, please enter valid period!"
+            errorLabel.Visible = True
+            Return
+        End If
+        Dim checkDatesStr As String = "SELECT start_date, end_date FROM Booking WHERE hotel_ID = @hotel_ID and room = @room"
 
         Dim checkDateCmd As New MySqlCommand(checkDatesStr, sqlconn)
         sqlconn.Open()
