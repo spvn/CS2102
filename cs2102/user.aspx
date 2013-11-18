@@ -12,36 +12,44 @@
     <title></title>
     <style type="text/css">
         .auto-style1 {
+            font-family: Candara;
+            background-color: #99FFCC;
             text-align: center;
         }
+
         .newStyle1 {
-            display: inline-block;
-            margin-left: 5px;
-            margin-right: 20px;
+            font-family: Candara;
         }
+        .newStyle2 {
+            font-family: Candara;
+        }
+        .newStyle3 {
+            font-family: Candara;
+        }
+
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div style="text-align: center">
 
-            <h1>User Page</h1>
+            <h2 class="auto-style1">User Page</h2>
 
         </div>
         <div style="text-align: center">
 
             <p style="font-weight: 700; text-align: center;">
-                Enter passport number to view current bookings:&nbsp;
-                <asp:TextBox ID="passportInput" runat="server" Height="18px" Style="margin-top: 5px"></asp:TextBox>
+                <span class="newStyle1">Enter passport number to view current bookings:</span>&nbsp;
+                <asp:TextBox ID="passportInput" runat="server" Height="18px" Style="margin-top: 5px" Font-Names="Candara"></asp:TextBox>
                 &nbsp;
-                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" Style="height: 26px" />
+                <asp:Button ID="submitButton" runat="server" OnClick="submitButton_Click" Text="Submit" Style="height: 26px" Font-Names="Candara" />
             </p>
 
         </div>
         <div style="text-align: center">
 
             <p style="font-weight: 700; text-align: center;">
-                <asp:Label ID="errorLabel" runat="server" Text="Label" Visible="False"></asp:Label>
+                <asp:Label ID="errorLabel" runat="server" Text="Label" Visible="False" Font-Names="Candara"></asp:Label>
             </p>
 
         </div>
@@ -49,7 +57,8 @@
 
 
 
-            <asp:GridView ID="currBookings" runat="server" DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="booking_ID" HorizontalAlign="Center" AutoGenerateEditButton="True" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" CellPadding="4" GridLines="Horizontal">
+            <asp:GridView ID="currBookings" runat="server" DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="booking_ID" HorizontalAlign="Center" AutoGenerateEditButton="True" CellPadding="4" GridLines="None" Font-Names="Candara" ForeColor="#333333">
+                <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="booking_ID" HeaderText="Booking ID" ReadOnly="True" SortExpression="booking_ID" InsertVisible="False" />
                     <asp:BoundField DataField="hotel_ID" HeaderText="Hotel ID" SortExpression="hotel_ID" />
@@ -60,15 +69,16 @@
                     <asp:CommandField ButtonType="Button" ShowDeleteButton="True" />
 
                 </Columns>
-                <FooterStyle BackColor="White" ForeColor="#333333" />
-                <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#336666" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="White" ForeColor="#333333" />
-                <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
-                <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                <SortedAscendingHeaderStyle BackColor="#487575" />
-                <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                <SortedDescendingHeaderStyle BackColor="#275353" />
+                <EditRowStyle BackColor="#7C6F57" />
+                <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#E3EAEB" />
+                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                <SortedAscendingHeaderStyle BackColor="#246B61" />
+                <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                <SortedDescendingHeaderStyle BackColor="#15524A" />
             </asp:GridView>
 
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>"
@@ -86,16 +96,21 @@
 
 
 
+            <span class="newStyle2">
+
+
+
             <strong>Browse Hotels</strong><br />
+            </span>
             <asp:Panel ID="Panel1" DefaultButton="Search" runat="server">
-                <p class="auto-style1">
+                <p class="newStyle3">
                     Hotel name:
                 <asp:TextBox ID="hotelnametb" runat="server" Style="text-align: left" Width="106px"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp; Country:
                 <asp:TextBox ID="countrytb" runat="server" Width="130px"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp; Stars:
                 <asp:TextBox ID="starstb" runat="server" Width="62px"></asp:TextBox>
-                    &nbsp;&nbsp;<asp:Button ID="Search" runat="server" Text="Search" />
+                    &nbsp;&nbsp;<asp:Button ID="Search" runat="server" Text="Search" Font-Names="Candara" />
                 </p>
            
                 <asp:CheckBoxList ID="CheckBoxList1" runat="server" CssClass="newStyle1" RepeatDirection="Horizontal" Width="622px">
@@ -110,30 +125,32 @@
 
 
 
-            <asp:GridView ID="searchResults" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" CellPadding="4" GridLines="Horizontal" DataKeyNames="hotel_ID" DataSourceID="SqlDataSource1" AllowSorting="True">
+            <asp:GridView ID="searchResults" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" CellPadding="4" GridLines="None" DataKeyNames="hotel_ID" DataSourceID="SqlDataSource1" AllowSorting="True" Font-Names="Candara" ForeColor="#333333">
+                <AlternatingRowStyle BackColor="White" />
                 <Columns>
-                    <asp:BoundField DataField="hotel_ID" HeaderText="Hotel ID" ReadOnly="True" SortExpression="hotel_ID" />
+                    <asp:BoundField DataField="hotel_ID" HeaderText="Hotel ID" ReadOnly="True" SortExpression="hotel_ID" AccessibleHeaderText="candara" />
                     <asp:BoundField DataField="h_name" HeaderText="Hotel Name" SortExpression="h_name" />
                     <asp:BoundField DataField="stars" HeaderText="Stars" SortExpression="stars" />
-                    <asp:BoundField DataField="wifi" HeaderText="Wifi?" SortExpression="wifi" />
-                    <asp:BoundField DataField="gym" HeaderText="Gym?" SortExpression="gym" />
-                    <asp:BoundField DataField="swimming_pool" HeaderText="Swmming Pool?" SortExpression="swimming_pool" />
-                    <asp:BoundField DataField="shuttle_bus" HeaderText="Shuttle Bus Service?" SortExpression="shuttle_bus" />
-                    <asp:BoundField DataField="spa" HeaderText="Spa?" SortExpression="spa" />
+                    <asp:BoundField DataField="wifi" HeaderText="Wifi" SortExpression="wifi" />
+                    <asp:BoundField DataField="gym" HeaderText="Gym" SortExpression="gym" />
+                    <asp:BoundField DataField="swimming_pool" HeaderText="Swmming Pool" SortExpression="swimming_pool" />
+                    <asp:BoundField DataField="shuttle_bus" HeaderText="Shuttle Bus Service" SortExpression="shuttle_bus" />
+                    <asp:BoundField DataField="spa" HeaderText="Spa" SortExpression="spa" />
                     <asp:BoundField DataField="country" HeaderText="Country" SortExpression="country" />
                     <asp:BoundField DataField="address" HeaderText="Address" SortExpression="address" />
                     <asp:BoundField DataField="postal_code" HeaderText="Postal Code" SortExpression="postal_code" />
                     <asp:CommandField ButtonType="Button" HeaderText="Book A Room" ShowHeader="True" ShowSelectButton="True" />
                 </Columns>
-                <FooterStyle BackColor="White" ForeColor="#333333" />
-                <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#336666" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="White" ForeColor="#333333" />
-                <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
-                <SortedAscendingCellStyle BackColor="#F7F7F7" />
-                <SortedAscendingHeaderStyle BackColor="#487575" />
-                <SortedDescendingCellStyle BackColor="#E5E5E5" />
-                <SortedDescendingHeaderStyle BackColor="#275353" />
+                <EditRowStyle BackColor="#7C6F57" />
+                <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#E3EAEB" />
+                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                <SortedAscendingHeaderStyle BackColor="#246B61" />
+                <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                <SortedDescendingHeaderStyle BackColor="#15524A" />
             </asp:GridView>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString %>" ProviderName="<%$ ConnectionStrings:akaspvnc_cs2102ConnectionString.ProviderName %>"
                 SelectCommand="SELECT Hotel.hotel_ID, Hotel.h_name, Hotel.stars, Features.wifi, Features.gym, Features.swimming_pool, Features.shuttle_bus, Features.spa, Hotel.country, Hotel.address, Hotel.postal_code FROM Hotel INNER JOIN Features ON Hotel.hotel_ID = Features.hotel_ID"></asp:SqlDataSource>
