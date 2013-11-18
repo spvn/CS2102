@@ -32,7 +32,7 @@
             <asp:Label ID="Label4" runat="server" Text="Passport ID"></asp:Label>&nbsp;&nbsp;
         <asp:TextBox ID="c_passportinput" runat="server" AutoPostBack="True"></asp:TextBox>&nbsp;
             <asp:Label ID="Label6" runat="server" Text="Name"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="c_nameinput" runat="server" ReadOnly="True"></asp:TextBox>
+        <asp:TextBox ID="c_nameinput" runat="server"></asp:TextBox>
                 &nbsp;
                 <asp:Label ID="Label10" runat="server" Text="Country"></asp:Label>
             &nbsp;
@@ -78,7 +78,10 @@
 
             <br /><br />
 
-            <asp:Button ID="submitButton" runat="server" Text="Submit" /><br /><br />
+            <asp:Button ID="submitButton" runat="server" Text="Submit" />&nbsp;
+                <asp:Label ID="sucesslabel" runat="server" Text="Booking Record Added!" Visible="False"></asp:Label>
+                <asp:Button ID="successbutton" runat="server" Text="Go back to admin page" Visible="False" />
+                <br /><br />
             <asp:Label ID="errorLabel" runat="server" Text="Label" Visible="False"></asp:Label>
 
             <br />

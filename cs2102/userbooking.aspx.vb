@@ -193,6 +193,8 @@ Partial Class userbooking
         cmd.Parameters.AddWithValue("@end_date", end_dateinput.SelectedDate.ToString("yyyy/MM/dd"))
 
         cmd.ExecuteNonQuery()
+        successbutton.Visible = True
+        successlabel.Visible = True
 
         sqlconn.Close()
 
@@ -217,5 +219,9 @@ Partial Class userbooking
         Dim price = roomData.Select("room_number= '" + roomlist.SelectedValue + "'")(0).Item(2).ToString()
 
         pricelabel.Text = "Cost per night: $" & price
+    End Sub
+
+    Protected Sub successbutton_Click(sender As Object, e As EventArgs) Handles successbutton.Click
+        Response.Redirect("user.aspx")
     End Sub
 End Class

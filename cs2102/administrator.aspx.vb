@@ -37,7 +37,7 @@ Partial Class administrator
         For Each drow As DataRow In dateTable.Rows
             If (startDate >= CType(drow(0), Date) And startDate <= CType(drow(1), Date)) Or
                 (endDate >= CType(drow(0), Date) And endDate <= CType(drow(1), Date)) Or
-                (startDate <= CType(drow(0), Date) And endDate >= CType(drow(1z), Date)) Then
+                (startDate <= CType(drow(0), Date) And endDate >= CType(drow(1), Date)) Then
                 errorLabel.Text = "Room is not available for the time period specified!"
                 errorLabel.Visible = True
                 e.Cancel = True

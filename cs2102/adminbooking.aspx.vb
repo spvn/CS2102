@@ -137,6 +137,8 @@ Partial Class adminbooking
         cmd.Parameters.AddWithValue("@end_date", end_dateinput.SelectedDate.ToString("yyyy/MM/dd"))
 
         cmd.ExecuteNonQuery()
+        sucesslabel.Visible = True
+        successbutton.Visible = True
 
         sqlconn.Close()
 
@@ -210,5 +212,9 @@ Partial Class adminbooking
 
 
 
+    End Sub
+
+    Protected Sub successbutton_Click(sender As Object, e As EventArgs) Handles successbutton.Click
+        Response.Redirect("administrator.aspx")
     End Sub
 End Class
