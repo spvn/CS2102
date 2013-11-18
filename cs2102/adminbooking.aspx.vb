@@ -15,7 +15,7 @@ Partial Class adminbooking
             Dim sqlconn As New MySqlConnection(connStr)
             Dim custTable As New DataTable
             Dim foundCustomer As Boolean = False
-            Dim customerQuery As String = "SELECT c_name, c_country, c_creditcard, c_email, c_phone FROM Customer WHERE c_passport = " & c_passportinput.Text
+            Dim customerQuery As String = "SELECT c_name, c_country, c_creditcard, c_email, c_phone FROM Customer WHERE c_passport = '" & c_passportinput.Text & "';"
 
             tempAdapter.SelectCommand = New MySqlCommand(customerQuery, sqlconn)
             tempAdapter.Fill(custTable)
