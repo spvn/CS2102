@@ -105,11 +105,11 @@
             <asp:Panel ID="Panel1" DefaultButton="Search" runat="server">
                 <p class="newStyle3">
                     Hotel name:
-                <asp:TextBox ID="hotelnametb" runat="server" Style="text-align: left" Width="106px"></asp:TextBox>
+                <asp:TextBox ID="hotelnametb" runat="server" Style="text-align: left" Width="106px" Font-Names="Candara"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp; Country:
-                <asp:TextBox ID="countrytb" runat="server" Width="130px"></asp:TextBox>
+                <asp:TextBox ID="countrytb" runat="server" Width="130px" Font-Names="Candara"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp; Stars:
-                <asp:TextBox ID="starstb" runat="server" Width="62px"></asp:TextBox>
+                <asp:TextBox ID="starstb" runat="server" Width="62px" Font-Names="Candara"></asp:TextBox>
                     &nbsp;&nbsp;<asp:Button ID="Search" runat="server" Text="Search" Font-Names="Candara" />
                 </p>
            

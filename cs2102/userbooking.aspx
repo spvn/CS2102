@@ -32,9 +32,9 @@
             &nbsp;&nbsp;
   
             <asp:Label ID="Label2" runat="server" Text="Hotel ID" Font-Names="Candara"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="hotel_IDinput" runat="server" Enabled="False" Width="56px"></asp:TextBox>&nbsp;
+        <asp:TextBox ID="hotel_IDinput" runat="server" Enabled="False" Width="56px" Font-Names="Candara"></asp:TextBox>&nbsp;
             <asp:Label ID="Label5" runat="server" Text="Hotel Name" Font-Bold="False" Font-Names="Candara" Font-Overline="False" Font-Underline="False"></asp:Label>&nbsp;&nbsp;
-        <asp:TextBox ID="hotel_nameinput" runat="server" ReadOnly="True" Enabled="False" Width="290px"></asp:TextBox>
+        <asp:TextBox ID="hotel_nameinput" runat="server" ReadOnly="True" Enabled="False" Width="290px" Font-Names="Candara"></asp:TextBox>
                 <br />
                 <br />
 &nbsp;
